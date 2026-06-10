@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>IGS — Website Redesign Preview</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg:      #070B14;
+  --surface: #0D1424;
+  --card:    #111827;
+  --border:  #1E2D47;
+  --cyan:    #06B6D4;
+  --violet:  #8B5CF6;
+  --blue:    #3B82F6;
+  --green:   #10B981;
+  --text:    #E2E8F0;
+  --muted:   #4B6280;
+  --label:   #8BA3C0;
+}
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Inter', sans-serif;
+  min-height: 100vh;
+  display: flex; flex-direction: column;
+}
+
+/* NAV */
+nav {
+  background: rgba(7,11,20,0.95);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  padding: 0 48px; height: 60px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+.nav-mark {
+  width: 32px; height: 32px; border-radius: 8px;
+  background: linear-gradient(135deg, var(--cyan), var(--violet));
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Space Grotesk', sans-serif; font-weight: 800; font-size: 15px; color: white;
+}
+.nav-brand { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 16px; color: var(--text); }
+.nav-brand span { color: var(--cyan); }
+.nav-right { font-size: 12px; color: var(--muted); }
+.nav-right a { color: var(--cyan); text-decoration: none; }
+
+/* HERO */
+.hero {
+  position: relative; overflow: hidden;
+  padding: 80px 48px 64px;
+  text-align: center;
+  background: linear-gradient(135deg, #070B14 0%, #0A1628 60%, #0D1A3A 100%);
+  border-bottom: 1px solid var(--border);
+}
+canvas { position: absolute; top:0; left:0; width:100%; height:100%; pointer-events:none; }
+.hero-inner { position: relative; z-index: 2; max-width: 600px; margin: 0 auto; }
+.eyebrow {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(6,182,212,0.1); border: 1px solid rgba(6,182,212,0.25);
+  border-radius: 20px; padding: 5px 16px; margin-bottom: 20px;
+  font-size: 11px; font-weight: 700; color: var(--cyan);
+  letter-spacing: 1px; text-transform: uppercase;
+}
+.eyebrow-dot { width:6px; height:6px; border-radius:50%; background:var(--cyan); box-shadow:0 0 6px var(--cyan); animation: pulse 1.5s infinite; }
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.3} }
+h1 {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 42px; font-weight: 800; line-height: 1.1;
+  letter-spacing: -1px; color: var(--text); margin-bottom: 16px;
+}
+.grad { background: linear-gradient(90deg, var(--cyan), var(--violet)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+.hero-sub { font-size: 15px; color: var(--label); line-height: 1.7; margin-bottom: 12px; }
+.hero-note { font-size: 12px; color: var(--muted); }
+.hero-note a { color: var(--cyan); text-decoration: none; }
+
+/* CARDS */
+.cards-wrap { padding: 56px 48px; flex: 1; }
+.cards-label {
+  font-size: 10px; font-weight: 700; letter-spacing: 2px;
+  text-transform: uppercase; color: var(--cyan);
+  margin-bottom: 24px; display: flex; align-items: center; gap: 12px;
+}
+.cards-label::after { content:''; flex:1; height:1px; background: linear-gradient(90deg, var(--border), transparent); }
+.cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; max-width: 1100px; margin: 0 auto; }
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 16px; overflow: hidden;
+  text-decoration: none; color: inherit;
+  display: flex; flex-direction: column;
+  transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+  position: relative;
+}
+.card:hover {
+  border-color: var(--c, var(--cyan));
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(0,0,0,0.4);
+}
+.card-top {
+  height: 180px; position: relative; overflow: hidden;
+  background: linear-gradient(135deg, var(--bg-from, #0A1628), var(--bg-to, #0D1A3A));
+  display: flex; align-items: center; justify-content: center;
+}
+.card-top::after {
+  content: '';
+  position: absolute; bottom: 0; left: 0; right: 0; height: 60px;
+  background: linear-gradient(transparent, var(--card));
+}
+.card-icon { font-size: 56px; z-index: 1; }
+.card-bar {
+  height: 3px;
+  background: linear-gradient(90deg, var(--c, var(--cyan)), var(--c2, var(--violet)));
+}
+.card-body { padding: 24px; flex: 1; display: flex; flex-direction: column; }
+.card-tag {
+  display: inline-block;
+  background: rgba(6,182,212,0.08); border: 1px solid rgba(6,182,212,0.2);
+  color: var(--c, var(--cyan)); font-size: 10px; font-weight: 700;
+  letter-spacing: 0.8px; text-transform: uppercase;
+  padding: 3px 10px; border-radius: 10px; margin-bottom: 12px;
+}
+.card-title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 18px; font-weight: 700; color: var(--text);
+  margin-bottom: 10px; line-height: 1.3;
+}
+.card-desc { font-size: 13px; color: var(--label); line-height: 1.7; flex: 1; }
+.card-footer {
+  padding: 16px 24px;
+  border-top: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: space-between;
+}
+.card-meta { font-size: 11px; color: var(--muted); }
+.card-cta {
+  display: flex; align-items: center; gap: 6px;
+  font-size: 12px; font-weight: 600; color: var(--c, var(--cyan));
+}
+.card-cta-arrow { transition: transform 0.2s; }
+.card:hover .card-cta-arrow { transform: translateX(4px); }
+
+/* BOTTOM NOTE */
+.bottom-strip {
+  background: var(--surface); border-top: 1px solid var(--border);
+  padding: 20px 48px;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.strip-note { font-size: 12px; color: var(--muted); }
+.strip-links { display: flex; gap: 20px; }
+.strip-links a { font-size: 12px; color: var(--muted); text-decoration: none; transition: color 0.15s; }
+.strip-links a:hover { color: var(--cyan); }
+.strip-badge {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: rgba(16,185,129,0.1); border: 1px solid rgba(16,185,129,0.2);
+  color: var(--green); font-size: 11px; font-weight: 600;
+  padding: 4px 12px; border-radius: 20px;
+}
+.strip-badge-dot { width:6px; height:6px; border-radius:50%; background:var(--green); box-shadow:0 0 5px var(--green); animation:pulse 2s infinite; }
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="#" class="nav-logo">
+    <div class="nav-mark">I</div>
+    <div class="nav-brand">IGS<span>.</span></div>
+  </a>
+  <div class="nav-right">Website Redesign Preview · <a href="https://www.infinityglobals.com" target="_blank">infinityglobals.com ↗</a></div>
+</nav>
+
+<section class="hero">
+  <canvas id="nc"></canvas>
+  <div class="hero-inner">
+    <div class="eyebrow"><span class="eyebrow-dot"></span> Redesign Preview Package</div>
+    <h1>IGS <span class="grad">AI-First</span><br>Redesign</h1>
+    <p class="hero-sub">A complete website redesign proposal for Infinity Global Solutions — repositioned as Southeast Asia's leading AI & intelligent solutions provider.</p>
+    <p class="hero-note">Built from <a href="https://www.infinityglobals.com" target="_blank">infinityglobals.com</a> + <a href="https://icansee.ai" target="_blank">icansee.ai</a> · For review & developer handoff</p>
+  </div>
+</section>
+
+<div class="cards-wrap">
+  <div class="cards-label">Three deliverables</div>
+  <div class="cards">
+
+    <!-- ABOUT US -->
+    <a href="igs_about_us.html" class="card" style="--c:var(--cyan);--c2:var(--violet)">
+      <div class="card-top" style="--bg-from:#0A1628;--bg-to:#0D1A3A">
+        <div class="card-icon">🏢</div>
+      </div>
+      <div class="card-bar"></div>
+      <div class="card-body">
+        <div class="card-tag">Page Redesign</div>
+        <div class="card-title">About Us</div>
+        <div class="card-desc">Full AI-repositioned About Us page integrating IGS and iCanSee.ai — hero, mission/vision/values, 6 service pillars, complete 2009–2026 timeline, leadership, and clients.</div>
+      </div>
+      <div class="card-footer">
+        <div class="card-meta">8 sections · WordPress-ready copy</div>
+        <div class="card-cta">Open <span class="card-cta-arrow">→</span></div>
+      </div>
+    </a>
+
+    <!-- AI DASHBOARD -->
+    <a href="igs_ai_dashboard.html" class="card" style="--c:var(--violet);--c2:var(--blue)">
+      <div class="card-top" style="--bg-from:#0D1020;--bg-to:#150D2A">
+        <div class="card-icon">🤖</div>
+      </div>
+      <div class="card-bar" style="background:linear-gradient(90deg,var(--violet),var(--blue))"></div>
+      <div class="card-body">
+        <div class="card-tag" style="color:var(--violet);border-color:rgba(139,92,246,0.2);background:rgba(139,92,246,0.08)">AI Dashboard</div>
+        <div class="card-title">AI Solutions Dashboard</div>
+        <div class="card-desc">Company overview dashboard repositioned as an AI-first provider — with neural network hero, AI service spotlights, value props, service hierarchy, and global offices.</div>
+      </div>
+      <div class="card-footer">
+        <div class="card-meta">8 improvements applied</div>
+        <div class="card-cta" style="color:var(--violet)">Open <span class="card-cta-arrow">→</span></div>
+      </div>
+    </a>
+
+    <!-- ORIGINAL DASHBOARD -->
+    <a href="igs_dashboard.html" class="card" style="--c:var(--blue);--c2:var(--green)">
+      <div class="card-top" style="--bg-from:#0A1220;--bg-to:#0D1A28">
+        <div class="card-icon">📊</div>
+      </div>
+      <div class="card-bar" style="background:linear-gradient(90deg,var(--blue),var(--green))"></div>
+      <div class="card-body">
+        <div class="card-tag" style="color:var(--blue);border-color:rgba(59,130,246,0.2);background:rgba(59,130,246,0.08)">Company Overview</div>
+        <div class="card-title">Company Dashboard</div>
+        <div class="card-desc">Original IGS company dashboard — services grid, global offices, product portfolio bars, company timeline, and tech tags. Clean dark-theme overview of all IGS capabilities.</div>
+      </div>
+      <div class="card-footer">
+        <div class="card-meta">Original version · v1</div>
+        <div class="card-cta" style="color:var(--blue)">Open <span class="card-cta-arrow">→</span></div>
+      </div>
+    </a>
+
+  </div>
+</div>
+
+<div class="bottom-strip">
+  <div class="strip-note">© 2009–2026 Infinity Global Solutions · Singapore · Myanmar · China · <a href="https://icansee.ai" target="_blank" style="color:var(--cyan);text-decoration:none">icansee.ai</a></div>
+  <div class="strip-badge"><div class="strip-badge-dot"></div> Redesign Preview</div>
+  <div class="strip-links">
+    <a href="https://www.infinityglobals.com" target="_blank">infinityglobals.com</a>
+    <a href="https://icansee.ai" target="_blank">icansee.ai</a>
+    <a href="https://www.infinityglobals.com/contact/" target="_blank">Contact IGS</a>
+  </div>
+</div>
+
+<script>
+const canvas = document.getElementById('nc');
+const ctx = canvas.getContext('2d');
+let W, H, nodes = [];
+function resize() { W = canvas.width = canvas.offsetWidth; H = canvas.height = canvas.offsetHeight; }
+function init() {
+  nodes = [];
+  for (let i = 0; i < 45; i++)
+    nodes.push({ x: Math.random()*W, y: Math.random()*H, vx:(Math.random()-.5)*.3, vy:(Math.random()-.5)*.3, r:Math.random()*2+1 });
+}
+function draw() {
+  ctx.clearRect(0,0,W,H);
+  for (let i=0;i<nodes.length;i++) for (let j=i+1;j<nodes.length;j++) {
+    const dx=nodes[i].x-nodes[j].x, dy=nodes[i].y-nodes[j].y, d=Math.sqrt(dx*dx+dy*dy);
+    if(d<130){ctx.strokeStyle=`rgba(6,182,212,${(1-d/130)*.15})`;ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(nodes[i].x,nodes[i].y);ctx.lineTo(nodes[j].x,nodes[j].y);ctx.stroke();}
+  }
+  nodes.forEach(n=>{
+    ctx.beginPath();ctx.arc(n.x,n.y,n.r,0,Math.PI*2);ctx.fillStyle='rgba(6,182,212,0.4)';ctx.fill();
+    n.x+=n.vx;n.y+=n.vy;
+    if(n.x<0||n.x>W)n.vx*=-1;if(n.y<0||n.y>H)n.vy*=-1;
+  });
+  requestAnimationFrame(draw);
+}
+resize();init();draw();
+window.addEventListener('resize',()=>{resize();init();});
+</script>
+
+</body>
+</html>
